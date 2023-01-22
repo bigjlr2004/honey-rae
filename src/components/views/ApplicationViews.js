@@ -1,23 +1,21 @@
-import {Outlet, Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router-dom";
+import { TicketContainer } from "../tickets/TicketContainer";
 import { TicketForm } from "../tickets/TicketForm";
-import { TicketList } from "../tickets/TicketList";
+import { CustomerViews } from "./CustomerViews";
+import { EmployeeViews } from "./EmployeeViews";
+
+const localHoneyUser = localStorage.getItem("honey_user")
+const honeyUserObject = JSON.parse(localHoneyUser);
 
 export const ApplicationViews = () => {
-	return (
-		<Routes>
-			<Route path="/" element={
-			<>
-				<h1>Honey Rae Repair Shop</h1>
-				<div>Your one stop shop to get all your electronics fixed</div>
-				
-				<Outlet />
-			</>	
-			}>
-				<Route path="tickets" element={ <TicketList /> }/>
+	if (honeyUserObject.staff) {
+		//return EmployeeViews
+		return <EmployeeViews />
+	} else {
 
-				<Route path="ticket/create" element={ <TicketForm /> } />
-			</Route>
-		</Routes>
-	)
+		//Return CustomerViews	
+		return <CustomerViews />
+
+	}
 }
 
