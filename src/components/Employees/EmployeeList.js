@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Employee } from "./Employee"
 import "./Employee.css"
 export const EmployeeList = () => {
 
@@ -17,21 +18,11 @@ export const EmployeeList = () => {
    return (
       <>
          <div className="employees" >
-            {employees.map(employee => {
-               return (
-
-
-                  <div className="employee" key={`${employee.id}`}>
-                     <div>
-                        Name: {employee.fullName}
-                     </div>
-                     <div>
-                        Email: {employee.email}
-                     </div>
-                  </div>
-
-               )
-            })}
+            {employees.map(employee => <Employee
+               key={`employee--${employee.id}`}
+               id={employee.id}
+               fullName={employee.fullName}
+               email={employee.email} />)}
          </div>
       </>
    )
