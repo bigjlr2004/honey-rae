@@ -1,0 +1,20 @@
+.employees {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: row;
+   justify-content: space-evenly;
+
+}
+
+.employee {
+   background-color: cornflowerblue;
+   color: white;
+   font-size: 1rem;
+   padding: .5rem;
+   margin: .5rem;
+}
+
+.slogan {
+   font-size: 1.5em;
+
+}
