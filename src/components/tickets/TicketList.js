@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { Ticket } from "./Ticket"
 import { tickets } from "./tickets.css"
 
 
 export const TicketList = ({ searchTerms }) => {
 
     const [tickets, setTickets] = useState([])
+    const [employees, setEmployees] = useState([])
     const [filteredTickets, setFiltered] = useState([])
     const [emergency, setEmergency] = useState(false)
     const [openOnly, updateOpenOnly] = useState(false)
@@ -21,16 +23,26 @@ export const TicketList = ({ searchTerms }) => {
             return ticket.description.toLowerCase().startsWith(searchTerms.toLowerCase())
         })
         setFiltered(searchedTickets)
-    }, [searchTerms]
+    }, [searchTerms])
 
-    )
+    const getAllTickets = () => {
+        fetch(' http://localhost:8088/serviceTickets?_embed=employeeTickets')
+            .then(response => response.json())
+            .then((ticketArray) => {
+
+                setTickets(ticketArray)
+            })
+    }
+
     useEffect(
         () => {
-            fetch(' http://localhost:8088/serviceTickets')
-                .then(response => response.json())
-                .then((ticketArray) => {
+            getAllTickets()
 
-                    setTickets(ticketArray)
+            fetch(' http://localhost:8088/employees?_expand=user')
+                .then(response => response.json())
+                .then((data) => {
+
+                    setEmployees(data)
                 })
         }, []
     )
@@ -85,6 +97,7 @@ export const TicketList = ({ searchTerms }) => {
                     <>
                         <button onClick={() => { setEmergency(true) }} >Emergency Tickets</button>
                         <button onClick={() => { setEmergency(false) }} >All Tickets</button>
+
                     </>
 
 
@@ -101,11 +114,17 @@ export const TicketList = ({ searchTerms }) => {
                 {
                     filteredTickets.map(
                         (ticket) => {
-                            return <section key={ticket.id} className="ticket">
-                                <header>{ticket.description}</header>
-                                <footer>Emergency: {ticket.emergency ? "❕ " : "No"}</footer>
-                            </section>
+                            return (
+                                <div key={`ticket--${ticket.id}`} className="ticket">
+                                    <Ticket
+                                        getAllTickets={getAllTickets}
+                                        honeyUserObject={honeyUserObject}
+                                        ticket={ticket}
+                                        employees={employees} />
+                                </div>
+                            )
                         }
+
                     )
                 }
             </article>
