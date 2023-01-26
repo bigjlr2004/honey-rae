@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { elephantPost, fetchDelete } from "../ApiManager";
 
 export const Ticket = ({ ticket, honeyUserObject, employees, getAllTickets }) => {
 
@@ -23,9 +24,7 @@ export const Ticket = ({ ticket, honeyUserObject, employees, getAllTickets }) =>
     const deleteButton = () => {
         if (!honeyUserObject.staff) {
             return <button onClick={() => {
-                return fetch(`http://localhost:8088/serviceTickets/${ticket.id}`, {
-                    method: "DELETE"
-                })
+                return fetchDelete(`http://localhost:8088/serviceTickets/${ticket.id}`)
                     .then(() => {
                         getAllTickets()
                     })
@@ -43,13 +42,7 @@ export const Ticket = ({ ticket, honeyUserObject, employees, getAllTickets }) =>
             emergency: ticket.emergency,
             datteCompleted: new Date()
         }
-        return fetch(`http://localhost:8088/serviceTickets/${ticket.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(copy)
-        })
+        return elephantPost(`http://localhost:8088/serviceTickets/${ticket.id}`, copy, "PUT")
             .then(response => response.json())
             .then(getAllTickets)
     }
@@ -57,16 +50,10 @@ export const Ticket = ({ ticket, honeyUserObject, employees, getAllTickets }) =>
         if (honeyUserObject.staff) {
             return <button
                 onClick={() => {
-                    fetch(' http://localhost:8088/employeeTickets', {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            employeeId: userEmployee.id,
-                            serviceTicketId: ticket.id
-                        })
-                    })
+                    elephantPost(`http://localhost:8088/employeeTickets`, {
+                        employeeId: userEmployee.id,
+                        serviceTicketId: ticket.id
+                    }, "POST")
                         .then(response => response.json())
                         .then(() => {
                             getAllTickets()
@@ -84,7 +71,7 @@ export const Ticket = ({ ticket, honeyUserObject, employees, getAllTickets }) =>
         <section key={`ticket--${ticket.id}`} className="ticket">
             <header>
                 {
-                    honeyUserObject
+                    (honeyUserObject.staff)
                         ? `Ticket ${ticket.id}`
                         : <Link to={`/tickets/${ticket.id}/edit`}>Ticket {ticket.id}</Link>
                 }

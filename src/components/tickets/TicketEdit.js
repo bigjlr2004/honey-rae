@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { elephantPost, standardFetch } from "../ApiManager"
 
 export const TicketEdit = () => {
     const { ticketId } = useParams()
@@ -12,8 +13,7 @@ export const TicketEdit = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/serviceTickets?id=${ticketId}`)
-                .then(response => response.json())
+            standardFetch(`http://localhost:8088/serviceTickets?id=${ticketId}`)
                 .then((data) => {
                     const ticketObject = data[0]
                     updateTicket(ticketObject)
@@ -26,15 +26,10 @@ export const TicketEdit = () => {
             TODO: Perform the PUT fetch() call here to update the profile.
             Navigate user to home page when done.
         */
-        fetch(`http://localhost:8088/serviceTickets/${ticketId}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(ticket)
-        }).then(() => {
-            setFeedback("Ticket Updated Back to Your Tickets")
-        })
+        elephantPost(`http://localhost:8088/serviceTickets/${ticketId}`, ticket, "PUT")
+            .then(() => {
+                setFeedback("Ticket Updated Back to Your Tickets")
+            })
     }
     const [feedback, setFeedback] = useState("")
 

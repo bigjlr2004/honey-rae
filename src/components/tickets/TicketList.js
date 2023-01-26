@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { standardFetch } from "../ApiManager"
 import { Ticket } from "./Ticket"
-import { tickets } from "./tickets.css"
+
 
 
 export const TicketList = ({ searchTerms }) => {
@@ -26,8 +27,7 @@ export const TicketList = ({ searchTerms }) => {
     }, [searchTerms])
 
     const getAllTickets = () => {
-        fetch(' http://localhost:8088/serviceTickets?_embed=employeeTickets')
-            .then(response => response.json())
+        standardFetch('http://localhost:8088/serviceTickets?_embed=employeeTickets')
             .then((ticketArray) => {
 
                 setTickets(ticketArray)
@@ -37,11 +37,8 @@ export const TicketList = ({ searchTerms }) => {
     useEffect(
         () => {
             getAllTickets()
-
-            fetch(' http://localhost:8088/employees?_expand=user')
-                .then(response => response.json())
+            standardFetch(' http://localhost:8088/employees?_expand=user')
                 .then((data) => {
-
                     setEmployees(data)
                 })
         }, []
@@ -73,7 +70,6 @@ export const TicketList = ({ searchTerms }) => {
     useEffect(
         () => {
             if (openOnly) {
-
                 const openTicketArray = tickets.filter(ticket => {
                     return ticket.userId === honeyUserObject.id && ticket.dateCompleted === ""
                 })
@@ -82,7 +78,6 @@ export const TicketList = ({ searchTerms }) => {
                 const myTickets = tickets.filter(ticket => ticket.userId === honeyUserObject.id)
                 setFiltered(myTickets)
             }
-
         },
         [openOnly]
 

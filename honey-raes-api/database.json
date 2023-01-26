@@ -41,6 +41,30 @@
       "fullName": "Jeremy Bakker",
       "isStaff": true,
       "id": 7
+    },
+    {
+      "email": "tonythetiger@u",
+      "fullName": "Tony",
+      "isStaff": true,
+      "id": 8
+    },
+    {
+      "email": "homec@u",
+      "fullName": "Home Chicken",
+      "isStaff": true,
+      "id": 9
+    },
+    {
+      "email": "john@john.com",
+      "fullName": "Stevie Wonder",
+      "isStaff": true,
+      "id": 10
+    },
+    {
+      "email": "bob@u",
+      "fullName": "Bobs Uncle",
+      "isStaff": true,
+      "id": 11
     }
   ],
   "customers": [
@@ -59,14 +83,14 @@
     {
       "id": 3,
       "address": "7346 Ritchie Road ",
-      "phoneNumber": "(507) 720-1157",
+      "phoneNumber": "(507) 720-1234",
       "userId": 3
     }
   ],
   "employees": [
     {
       "id": 1,
-      "specialty": "PC Repair and Mac Expertise",
+      "specialty": "PC Repair and Mac ",
       "rate": 72.47,
       "userId": 4
     },
@@ -105,11 +129,11 @@
       "id": 2
     },
     {
-      "id": 3,
       "userId": 1,
-      "description": "Sunt pariatur et  hic voluptatem. Neque aliquam voluptas eos incidunt repellendus. Vero expedita non sit quaerat sit et eum. ",
-      "emergency": true,
-      "dateCompleted": ""
+      "description": "Sunt pariatur et  hic voluptatem. Neque aliquam voluptas eos incidunt repellendus. Vero expedita non sit ",
+      "emergency": false,
+      "datteCompleted": "2023-01-26T19:54:59.597Z",
+      "id": 3
     },
     {
       "id": 5,
@@ -134,10 +158,24 @@
     },
     {
       "userId": 2,
-      "description": "Need my puter worked on ",
+      "description": "MY computer will not turn on",
       "emergency": true,
       "dateCompleted": "",
-      "id": 8
+      "id": 10
+    },
+    {
+      "userId": 2,
+      "description": "John was wiring up my computer and it all fell apart.",
+      "emergency": true,
+      "dateCompleted": "",
+      "id": 11
+    },
+    {
+      "userId": 2,
+      "description": "Test ticket for all tickets button",
+      "emergency": true,
+      "datteCompleted": "2023-01-26T20:16:15.850Z",
+      "id": 12
     }
   ],
   "employeeTickets": [
@@ -160,6 +198,11 @@
       "employeeId": 1,
       "serviceTicketId": 2,
       "id": 5
+    },
+    {
+      "employeeId": 1,
+      "serviceTicketId": 7,
+      "id": 6
     }
   ]
 }

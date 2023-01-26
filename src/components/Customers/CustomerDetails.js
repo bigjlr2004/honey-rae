@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { standardFetch } from "../ApiManager"
 
 export const CustomerDetails = () => {
     const { customerId } = useParams()
@@ -7,8 +8,7 @@ export const CustomerDetails = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/customers?_expand=user&userId=${customerId}`)
-                .then(response => response.json())
+            standardFetch(`http://localhost:8088/customers?_expand=user&userId=${customerId}`)
                 .then((data) => {
                     const singleCustomer = data[0]
                     updateCustomer(singleCustomer)
